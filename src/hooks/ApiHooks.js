@@ -37,7 +37,18 @@ const useMedia = () => {
     getMedia();
   }, []);
 
-  return {mediaArray};
+  const postMedia = async (formdata, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+      },
+      body: formdata,
+    };
+    return await fetchJson(baseUrl + 'media', fetchOptions);
+  };
+
+  return {mediaArray, postMedia};
 };
 
 const useUser = () => {
