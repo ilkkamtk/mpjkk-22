@@ -1,12 +1,8 @@
 import {Button, Grid, Typography} from '@mui/material';
-import {useContext} from 'react';
 // import {useNavigate} from 'react-router-dom';
-import {MediaContext} from '../contexts/MediaContext';
 import useForm from '../hooks/FormHooks';
 
 const Upload = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [user, setUser] = useContext(MediaContext);
   const alkuarvot = {
     title: '',
     description: '',
@@ -49,6 +45,8 @@ const Upload = () => {
             onChange={handleInputChange}
             value={inputs.description}
           ></textarea>
+
+          <input type="file" name="file" accept="image/*, video/*, audio/*" />
 
           <Button fullWidth color="primary" type="submit" variant="contained">
             Login
