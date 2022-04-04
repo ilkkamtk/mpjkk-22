@@ -22,7 +22,9 @@ const Upload = () => {
     doUpload,
     alkuarvot
   );
+
   console.log(inputs);
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -46,7 +48,12 @@ const Upload = () => {
             value={inputs.description}
           ></textarea>
 
-          <input type="file" name="file" accept="image/*, video/*, audio/*" />
+          <input
+            type="file"
+            name="file"
+            accept="image/*, video/*, audio/*"
+            onChange={handleInputChange}
+          />
 
           <Button fullWidth color="primary" type="submit" variant="contained">
             Login
