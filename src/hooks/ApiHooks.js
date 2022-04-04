@@ -22,6 +22,7 @@ const useMedia = () => {
   const [loading, setLoading] = useState(false);
   const getMedia = async () => {
     try {
+      setLoading(true);
       const media = await fetchJson(baseUrl + 'media');
       const allFiles = await Promise.all(
         media.map(async (file) => {
@@ -31,6 +32,8 @@ const useMedia = () => {
       setMediaArray(allFiles);
     } catch (err) {
       alert(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
