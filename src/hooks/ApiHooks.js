@@ -19,6 +19,7 @@ const fetchJson = async (url, options = {}) => {
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
+  const [loading, setLoading] = useState(false);
   const getMedia = async () => {
     try {
       const media = await fetchJson(baseUrl + 'media');
@@ -38,17 +39,22 @@ const useMedia = () => {
   }, []);
 
   const postMedia = async (formdata, token) => {
-    const fetchOptions = {
-      method: 'POST',
-      headers: {
-        'x-access-token': token,
-      },
-      body: formdata,
-    };
-    return await fetchJson(baseUrl + 'media', fetchOptions);
+    try {
+      setLoading(true);
+      const fetchOptions = {
+        method: 'POST',
+        headers: {
+          'x-access-token': token,
+        },
+        body: formdata,
+      };
+      return await fetchJson(baseUrl + 'media', fetchOptions);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  return {mediaArray, postMedia};
+  return {mediaArray, postMedia, loading};
 };
 
 const useUser = () => {

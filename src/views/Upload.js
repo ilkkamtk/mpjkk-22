@@ -1,4 +1,4 @@
-import {Button, Grid, Typography} from '@mui/material';
+import {Button, CircularProgress, Grid, Typography} from '@mui/material';
 import {useMedia} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
 import useForm from '../hooks/FormHooks';
@@ -8,7 +8,7 @@ const Upload = () => {
     title: '',
     description: '',
   };
-  const {postMedia} = useMedia();
+  const {postMedia, loading} = useMedia();
   const navigate = useNavigate();
 
   const doUpload = async () => {
@@ -62,10 +62,13 @@ const Upload = () => {
             accept="image/*, video/*, audio/*"
             onChange={handleInputChange}
           />
-
-          <Button fullWidth color="primary" type="submit" variant="contained">
-            Login
-          </Button>
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Button fullWidth color="primary" type="submit" variant="contained">
+              Login
+            </Button>
+          )}
         </form>
       </Grid>
     </Grid>
