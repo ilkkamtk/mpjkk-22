@@ -90,6 +90,12 @@ const Nav = () => {
                 </ListItemIcon>
                 <ListItemText primary="Profile" />
               </ListItemButton>
+              <ListItemButton component={Link} to="/upload">
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <ListItemText primary="Upload" />
+              </ListItemButton>
             </>
           )}
         </List>
