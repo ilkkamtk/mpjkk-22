@@ -34,16 +34,13 @@ const Upload = () => {
   );
 
   useEffect(() => {
-    const reader = new FileReader();
-    const handler = () => {
-      setPreview(reader.result);
-    };
-    reader.addEventListener('load', handler);
-    inputs.file && reader.readAsDataURL(inputs.file);
-
-    return () => {
-      reader.removeEventListener('load', handler);
-    };
+    if (inputs.file) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        setPreview(reader.result);
+      });
+      reader.readAsDataURL(inputs.file);
+    }
   }, [inputs.file]);
 
   console.log(inputs);
