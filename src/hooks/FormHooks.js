@@ -13,7 +13,7 @@ const useForm = (callback, initState) => {
     setInputs((inputs) => {
       return {
         ...inputs,
-        [event.target.name]: event.target.value,
+        [event.target.name]: event.target.value, // event.target.files[0]
       };
     });
   };
