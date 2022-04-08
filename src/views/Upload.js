@@ -1,9 +1,17 @@
-import {Button, CircularProgress, Grid, Typography} from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  Slider,
+  Typography,
+} from '@mui/material';
 import {useMedia, useTag} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
 import useForm from '../hooks/FormHooks';
 import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
+import {ValidatorForm} from 'react-material-ui-form-validator';
+import {TextValidator} from 'react-material-ui-form-validator';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
@@ -55,46 +63,71 @@ const Upload = () => {
   console.log(inputs);
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Typography component="h1" variant="h2" gutterBottom>
-          Login
-        </Typography>
+    <>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography component="h1" variant="h2" gutterBottom>
+            Upload
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <ValidatorForm onSubmit={handleSubmit}>
+            <TextValidator
+              fullWidth
+              placeholder="title"
+              name="title"
+              onChange={handleInputChange}
+              value={inputs.title}
+            />
+            <TextValidator
+              fullWidth
+              placeholder="description"
+              name="description"
+              onChange={handleInputChange}
+              value={inputs.description}
+            />
+
+            <TextValidator
+              fullWidth
+              type="file"
+              name="file"
+              accept="image/*, video/*, audio/*"
+              onChange={handleInputChange}
+            />
+
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <Button
+                fullWidth
+                color="primary"
+                type="submit"
+                variant="contained"
+              >
+                Upload
+              </Button>
+            )}
+          </ValidatorForm>
+        </Grid>
       </Grid>
-
-      <Grid item xs={12}>
-        <form onSubmit={handleSubmit}>
-          <input
-            placeholder="title"
-            name="title"
-            onChange={handleInputChange}
-            value={inputs.title}
-          />
-          <textarea
-            placeholder="description"
-            name="description"
-            onChange={handleInputChange}
-            value={inputs.description}
-          ></textarea>
-
-          <input
-            type="file"
-            name="file"
-            accept="image/*, video/*, audio/*"
-            onChange={handleInputChange}
-          />
+      <Grid container>
+        <Grid item xs="6">
           <img src={preview} alt="preview" />
-
-          {loading ? (
-            <CircularProgress />
-          ) : (
-            <Button fullWidth color="primary" type="submit" variant="contained">
-              Login
-            </Button>
-          )}
-        </form>
+        </Grid>
+        <Grid container>
+          <Grid item xs="12">
+            <Slider
+              name="brightness"
+              min="0"
+              max="200"
+              step="1"
+              valueLabelDisplay="on"
+            />
+          </Grid>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 
