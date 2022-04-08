@@ -1,8 +1,9 @@
 import {Button, CircularProgress, Grid, Typography} from '@mui/material';
-import {useMedia} from '../hooks/ApiHooks';
+import {useMedia, useTag} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
 import useForm from '../hooks/FormHooks';
 import {useState, useEffect} from 'react';
+import {appID} from '../utils/variables';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
@@ -11,6 +12,7 @@ const Upload = () => {
     description: '',
   };
   const {postMedia, loading} = useMedia();
+  const {postTag} = useTag();
   const navigate = useNavigate();
 
   const doUpload = async () => {
@@ -22,7 +24,14 @@ const Upload = () => {
       formdata.append('description', inputs.description);
       formdata.append('file', inputs.file);
       const mediaData = await postMedia(formdata, token);
-      confirm(mediaData.message) && navigate('/home');
+      const tagData = await postTag(
+        {
+          file_id: mediaData.file_id,
+          tag: appID,
+        },
+        token
+      );
+      confirm(tagData.message) && navigate('/home');
     } catch (err) {
       alert(err.message);
     }

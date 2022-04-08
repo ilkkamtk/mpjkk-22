@@ -112,7 +112,19 @@ const useTag = () => {
       throw new Error('No results');
     }
   };
-  return {getTag};
+
+  const postTag = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await fetchJson(baseUrl + 'tags', fetchOptions);
+  };
+  return {getTag, postTag};
 };
 
 export {useMedia, useLogin, useUser, useTag};
