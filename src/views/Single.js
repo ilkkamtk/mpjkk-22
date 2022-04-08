@@ -18,7 +18,12 @@ const Single = () => {
   const file = location.state.file;
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
-    filters: {},
+    filters: {
+      brightness: 100,
+      contrast: 100,
+      saturation: 100,
+      sepia: 0,
+    },
   };
   return (
     <>
