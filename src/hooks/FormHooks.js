@@ -8,8 +8,10 @@ const useForm = (callback, initState) => {
     }
     callback();
   };
+
   const handleInputChange = (event) => {
-    event.persist();
+    event.persist && event.persist();
+
     setInputs((inputs) => {
       return {
         ...inputs,
@@ -19,6 +21,7 @@ const useForm = (callback, initState) => {
       };
     });
   };
+
   return {
     handleSubmit,
     handleInputChange,

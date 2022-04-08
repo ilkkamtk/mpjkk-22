@@ -19,6 +19,11 @@ const Upload = () => {
     title: '',
     description: '',
   };
+
+  const filterarvot = {
+    brightess: 100,
+  };
+
   const {postMedia, loading} = useMedia();
   const {postTag} = useTag();
   const navigate = useNavigate();
@@ -50,6 +55,11 @@ const Upload = () => {
     alkuarvot
   );
 
+  const {inputs: filterInputs, handleInputChange: handleSliderChange} = useForm(
+    null,
+    filterarvot
+  );
+
   useEffect(() => {
     if (inputs.file) {
       const reader = new FileReader();
@@ -60,7 +70,7 @@ const Upload = () => {
     }
   }, [inputs.file]);
 
-  console.log(inputs);
+  console.log(inputs, filterInputs);
 
   return (
     <>
@@ -119,10 +129,11 @@ const Upload = () => {
           <Grid item xs="12">
             <Slider
               name="brightness"
-              min="0"
-              max="200"
-              step="1"
+              min={0}
+              max={200}
+              step={1}
               valueLabelDisplay="on"
+              onChange={handleSliderChange}
             />
           </Grid>
         </Grid>
