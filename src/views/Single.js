@@ -10,12 +10,16 @@ import {
   ListItemAvatar,
   Avatar,
 } from '@mui/material';
+import {safeParseJson} from '../utils/functions';
 
 const Single = () => {
   const location = useLocation();
   console.log(location);
-  const file = location.state.file; // TODO in the next task: single media from props.location.state
-  const {description, filters} = JSON.parse(file.description);
+  const file = location.state.file;
+  const {description, filters} = safeParseJson(file.description) || {
+    description: file.description,
+    filters: {},
+  };
   return (
     <>
       <Typography component="h1" variant="h2">
