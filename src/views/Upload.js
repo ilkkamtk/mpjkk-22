@@ -34,10 +34,15 @@ const Upload = () => {
   const doUpload = async () => {
     try {
       console.log('doUpload');
+      // lisätään filtterit descriptioniin
+      const desc = {
+        description: inputs.description,
+        filters: filterInputs,
+      };
       const token = localStorage.getItem('token');
       const formdata = new FormData();
       formdata.append('title', inputs.title);
-      formdata.append('description', inputs.description);
+      formdata.append('description', JSON.stringify(desc));
       formdata.append('file', inputs.file);
       const mediaData = await postMedia(formdata, token);
       const tagData = await postTag(

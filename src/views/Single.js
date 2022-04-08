@@ -15,7 +15,7 @@ const Single = () => {
   const location = useLocation();
   console.log(location);
   const file = location.state.file; // TODO in the next task: single media from props.location.state
-
+  const {description, filters} = JSON.parse(file.description);
   return (
     <>
       <Typography component="h1" variant="h2">
@@ -26,10 +26,18 @@ const Single = () => {
           component="img"
           image={mediaUrl + file.filename}
           alt={file.title}
-          sx={{height: '60vh'}}
+          sx={{
+            height: '60vh',
+            filter: `
+          brightness(${filters.brightness}%)
+          contrast(${filters.contrast}%)
+          saturate(${filters.saturation}%)
+          sepia(${filters.sepia}%)
+          `,
+          }}
         />
         <CardContent>
-          <Typography>{file.description}</Typography>
+          <Typography>{description}</Typography>
           <List>
             <ListItem>
               <ListItemAvatar>
