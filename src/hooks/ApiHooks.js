@@ -17,7 +17,7 @@ const fetchJson = async (url, options = {}) => {
   }
 };
 
-const useMedia = () => {
+const useMedia = (allFiles, userId) => {
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const getMedia = async () => {
@@ -29,6 +29,9 @@ const useMedia = () => {
           return await fetchJson(`${baseUrl}media/${file.file_id}`);
         })
       );
+      // jos !allFiles filteröi kirjautuneen
+      // käyttäjän tiedostot allFilesiin
+
       setMediaArray(allFiles);
     } catch (err) {
       alert(err.message);
