@@ -126,8 +126,6 @@ const Upload = () => {
               name="file"
               accept="image/*, video/*, audio/*"
               onChange={handleInputChange}
-              validators={validators.file}
-              errorMessages={errorMessages.file}
             />
 
             {loading ? (
