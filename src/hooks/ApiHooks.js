@@ -32,11 +32,7 @@ const useMedia = (showAllFiles, userId) => {
       // jos !showAllFiles, filteröi kirjautuneen
       // käyttäjän tiedostot allFilesiin
       if (!showAllFiles) {
-        allFiles = allFiles.filter((file) => {
-          if (file.user_id === userId) {
-            return file;
-          }
-        });
+        allFiles = allFiles.filter((file) => file.user_id === userId);
       }
 
       setMediaArray(allFiles);
@@ -49,7 +45,7 @@ const useMedia = (showAllFiles, userId) => {
 
   useEffect(() => {
     getMedia();
-  }, []);
+  }, [userId]);
 
   const postMedia = async (formdata, token) => {
     try {

@@ -7,7 +7,7 @@ const MyFiles = () => {
       <Typography component="h1" variant="h2">
         MyFiles
       </Typography>
-      <MediaTable allFiles="false" />
+      <MediaTable allFiles={false} />
     </>
   );
 };
