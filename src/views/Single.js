@@ -16,9 +16,7 @@ import {useEffect, useState} from 'react';
 import {useTag} from '../hooks/ApiHooks';
 
 const Single = () => {
-  const [avatar, setAvatar] = useState({
-    filename: 'https://placekitten.com/320',
-  });
+  const [avatar, setAvatar] = useState({});
   const location = useLocation();
   console.log(location);
   const file = location.state.file;
@@ -35,17 +33,23 @@ const Single = () => {
   const {getTag} = useTag();
 
   const fetchAvatar = async () => {
-    if (file) {
-      const avatars = await getTag('avatar_' + file.user_id);
-      const ava = avatars.pop();
-      ava.filename = mediaUrl + ava.filename;
-      setAvatar(ava);
+    try {
+      if (file) {
+        const avatars = await getTag('avatar_' + file.user_id);
+        const ava = avatars.pop();
+        ava.filename = mediaUrl + ava.filename;
+        setAvatar(ava);
+      }
+    } catch (err) {
+      // console.log(err);
     }
   };
 
   useEffect(() => {
     fetchAvatar();
   }, []);
+
+  console.log(avatar);
 
   return (
     <>
@@ -75,7 +79,7 @@ const Single = () => {
           <List>
             <ListItem>
               <ListItemAvatar>
-                <Avatar variant={'circle'} src={'logo192.png'} />
+                <Avatar variant={'circle'} src={avatar.filename} />
               </ListItemAvatar>
               <Typography variant="subtitle2">{file.user_id}</Typography>
             </ListItem>
