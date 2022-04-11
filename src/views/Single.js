@@ -11,6 +11,7 @@ import {
   Avatar,
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
+import BackButton from '../components/BackButton';
 
 const Single = () => {
   const location = useLocation();
@@ -27,6 +28,7 @@ const Single = () => {
   };
   return (
     <>
+      <BackButton />
       <Typography component="h1" variant="h2">
         {file.title}
       </Typography>

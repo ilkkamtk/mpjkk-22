@@ -10,14 +10,14 @@ import {useNavigate} from 'react-router-dom';
 import useForm from '../hooks/FormHooks';
 import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
-import {ValidatorForm} from 'react-material-ui-form-validator';
-import {TextValidator} from 'react-material-ui-form-validator';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 
 const Upload = () => {
   const [preview, setPreview] = useState('logo192.png');
   const alkuarvot = {
     title: '',
     description: '',
+    file: null,
   };
 
   const filterarvot = {
@@ -25,6 +25,18 @@ const Upload = () => {
     contrast: 100,
     saturation: 100,
     sepia: 0,
+  };
+
+  const validators = {
+    title: ['required', 'minStringLength: 3'],
+    description: ['minStringLength: 5'],
+    file: ['isFile'],
+  };
+
+  const errorMessages = {
+    username: ['required field', 'minimum 3 characters'],
+    description: ['minimum 5 characters'],
+    file: ['File is not valid'],
   };
 
   const {postMedia, loading} = useMedia();
@@ -97,6 +109,8 @@ const Upload = () => {
               name="title"
               onChange={handleInputChange}
               value={inputs.title}
+              validators={validators.title}
+              errorMessages={errorMessages.title}
             />
             <TextValidator
               fullWidth
@@ -104,6 +118,8 @@ const Upload = () => {
               name="description"
               onChange={handleInputChange}
               value={inputs.description}
+              validators={validators.description}
+              errorMessages={errorMessages.description}
             />
 
             <TextValidator
@@ -112,6 +128,8 @@ const Upload = () => {
               name="file"
               accept="image/*, video/*, audio/*"
               onChange={handleInputChange}
+              validators={validators.file}
+              errorMessages={errorMessages.file}
             />
 
             {loading ? (
@@ -122,6 +140,7 @@ const Upload = () => {
                 color="primary"
                 type="submit"
                 variant="contained"
+                disabled={!inputs.file}
               >
                 Upload
               </Button>
@@ -129,69 +148,75 @@ const Upload = () => {
           </ValidatorForm>
         </Grid>
       </Grid>
-      <Grid container>
-        <Grid item xs={12}>
-          <img
-            style={{
-              width: '100%',
-              filter: `
+      {inputs.file && (
+        <Grid container>
+          <Grid item xs={12}>
+            <img
+              style={{
+                width: '100%',
+                filter: `
               brightness(${filterInputs.brightness}%)
               contrast(${filterInputs.contrast}%)
               saturate(${filterInputs.saturation}%)
               sepia(${filterInputs.sepia}%)
               `,
-            }}
-            src={preview}
-            alt="preview"
-          />
+              }}
+              src={preview}
+              alt="preview"
+            />
+          </Grid>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography>Brightness</Typography>
+              <Slider
+                name="brightness"
+                min={0}
+                max={200}
+                step={1}
+                valueLabelDisplay="on"
+                onChange={handleSliderChange}
+                value={filterInputs.brightness}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Contrast</Typography>
+              <Slider
+                name="contrast"
+                min={0}
+                max={200}
+                step={1}
+                valueLabelDisplay="on"
+                onChange={handleSliderChange}
+                value={filterInputs.contrast}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Saturation</Typography>
+              <Slider
+                name="saturation"
+                min={0}
+                max={200}
+                step={1}
+                valueLabelDisplay="on"
+                onChange={handleSliderChange}
+                value={filterInputs.saturation}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Sepia</Typography>
+              <Slider
+                name="sepia"
+                min={0}
+                max={100}
+                step={1}
+                valueLabelDisplay="on"
+                onChange={handleSliderChange}
+                value={filterInputs.sepia}
+              />
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid container>
-          <Grid item xs={12}>
-            <Slider
-              name="brightness"
-              min={0}
-              max={200}
-              step={1}
-              valueLabelDisplay="on"
-              onChange={handleSliderChange}
-              value={filterInputs.brightness}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Slider
-              name="contrast"
-              min={0}
-              max={200}
-              step={1}
-              valueLabelDisplay="on"
-              onChange={handleSliderChange}
-              value={filterInputs.contrast}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Slider
-              name="saturation"
-              min={0}
-              max={200}
-              step={1}
-              valueLabelDisplay="on"
-              onChange={handleSliderChange}
-              value={filterInputs.saturation}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Slider
-              name="sepia"
-              min={0}
-              max={100}
-              step={1}
-              valueLabelDisplay="on"
-              onChange={handleSliderChange}
-              value={filterInputs.sepia}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
+      )}
     </>
   );
 };
