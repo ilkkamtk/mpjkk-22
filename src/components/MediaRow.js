@@ -8,9 +8,19 @@ import {mediaUrl} from '../utils/variables';
 const MediaRow = ({file, userId, deleteMedia}) => {
   const {update, setUpdate} = useContext(MediaContext);
   const doDelete = () => {
-    const deleteInfo = deleteMedia(file.file_id, localStorage.getItem('token'));
-    if (deleteInfo) {
-      setUpdate(!update);
+    const ok = confirm('Do juu delte?');
+    if (ok) {
+      try {
+        const deleteInfo = deleteMedia(
+          file.file_id,
+          localStorage.getItem('token')
+        );
+        if (deleteInfo) {
+          setUpdate(!update);
+        }
+      } catch (err) {
+        // console.log(err);
+      }
     }
   };
 
