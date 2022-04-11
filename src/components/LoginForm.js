@@ -7,7 +7,7 @@ import useForm from '../hooks/FormHooks';
 
 const LoginForm = () => {
   // eslint-disable-next-line no-unused-vars
-  const [user, setUser] = useContext(MediaContext);
+  const {user, setUser} = useContext(MediaContext);
   const alkuarvot = {
     username: '',
     password: '',
