@@ -39,6 +39,7 @@ const Single = () => {
         const ava = avatars.pop();
         ava.filename = mediaUrl + ava.filename;
         setAvatar(ava);
+        // hae kuvan pomistajan tiedot
       }
     } catch (err) {
       // console.log(err);

@@ -11,6 +11,7 @@ import Single from './views/Single';
 import {themeOptions} from './theme/themeOptions';
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import Upload from './views/Upload';
+import MyFiles from './views/MyFiles';
 
 const theme = createTheme(themeOptions);
 
@@ -29,6 +30,7 @@ const App = () => {
               <Route path="/single" element={<Single />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/upload" element={<Upload />} />
+              <Route path="/myfiles" element={<MyFiles />} />
             </Routes>
           </Container>
         </ThemeProvider>

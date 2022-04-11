@@ -75,6 +75,15 @@ const useUser = () => {
     return checkUser.available;
   };
 
+  const getUserById = async (userId, token) => {
+    const fetchOptions = {
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'users/' + userId, fetchOptions);
+  };
+
   const postUser = async (inputs) => {
     const fetchOptions = {
       method: 'POST',
@@ -86,7 +95,7 @@ const useUser = () => {
     return await fetchJson(baseUrl + 'users', fetchOptions);
   };
 
-  return {getUser, postUser, getUsername};
+  return {getUser, postUser, getUsername, getUserById};
 };
 
 const useLogin = () => {
