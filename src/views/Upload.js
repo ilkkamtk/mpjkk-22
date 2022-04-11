@@ -30,13 +30,11 @@ const Upload = () => {
   const validators = {
     title: ['required', 'minStringLength: 3'],
     description: ['minStringLength: 5'],
-    file: ['isFile'],
   };
 
   const errorMessages = {
     username: ['required field', 'minimum 3 characters'],
     description: ['minimum 5 characters'],
-    file: ['File is not valid'],
   };
 
   const {postMedia, loading} = useMedia();
