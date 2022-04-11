@@ -12,7 +12,7 @@ const MediaRow = ({file}) => {
       state={{file}}
     >
       <img
-        src={mediaUrl + file.thumbnails.w320}
+        src={file.thumbnails ? mediaUrl + file.thumbnails.w320 : 'logo512.png'}
         alt={file.title}
         loading="lazy"
       />

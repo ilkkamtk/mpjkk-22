@@ -12,8 +12,13 @@ import {
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
 import BackButton from '../components/BackButton';
+import {useEffect, useState} from 'react';
+import {useTag} from '../hooks/ApiHooks';
 
 const Single = () => {
+  const [avatar, setAvatar] = useState({
+    filename: 'https://placekitten.com/320',
+  });
   const location = useLocation();
   console.log(location);
   const file = location.state.file;
@@ -26,6 +31,22 @@ const Single = () => {
       sepia: 0,
     },
   };
+
+  const {getTag} = useTag();
+
+  const fetchAvatar = async () => {
+    if (file) {
+      const avatars = await getTag('avatar_' + file.user_id);
+      const ava = avatars.pop();
+      ava.filename = mediaUrl + ava.filename;
+      setAvatar(ava);
+    }
+  };
+
+  useEffect(() => {
+    fetchAvatar();
+  }, []);
+
   return (
     <>
       <BackButton />
@@ -34,8 +55,10 @@ const Single = () => {
       </Typography>
       <Card>
         <CardMedia
-          component="img"
-          image={mediaUrl + file.filename}
+          component={file.media_type === 'image' ? 'img' : file.media_type}
+          controls={true}
+          poster={mediaUrl + file.screenshot}
+          src={mediaUrl + file.filename}
           alt={file.title}
           sx={{
             height: '60vh',
