@@ -23,17 +23,18 @@ const useMedia = (showAllFiles, userId) => {
   const getMedia = async () => {
     try {
       setLoading(true);
-      const media = await useTag().getTag(appID);
-      let allFiles = await Promise.all(
+      let media = await useTag().getTag(appID);
+      // jos !showAllFiles, filteröi kirjautuneen
+      // käyttäjän tiedostot media taulukkoon
+      if (!showAllFiles) {
+        media = media.filter((file) => file.user_id === userId);
+      }
+
+      const allFiles = await Promise.all(
         media.map(async (file) => {
           return await fetchJson(`${baseUrl}media/${file.file_id}`);
         })
       );
-      // jos !showAllFiles, filteröi kirjautuneen
-      // käyttäjän tiedostot allFilesiin
-      if (!showAllFiles) {
-        allFiles = allFiles.filter((file) => file.user_id === userId);
-      }
 
       setMediaArray(allFiles);
     } catch (err) {
