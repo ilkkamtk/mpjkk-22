@@ -76,7 +76,24 @@ const useMedia = (showAllFiles, userId) => {
     return await fetchJson(baseUrl + 'media/' + fileId, fetchOptions);
   };
 
-  return {mediaArray, postMedia, deleteMedia, loading};
+  const putMedia = async (fileId, data, token) => {
+    try {
+      setLoading(true);
+      const fetchOptions = {
+        method: 'PUT',
+        headers: {
+          'x-access-token': token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      return await fetchJson(baseUrl + 'media/' + fileId, fetchOptions);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {mediaArray, postMedia, deleteMedia, putMedia, loading};
 };
 
 const useUser = () => {

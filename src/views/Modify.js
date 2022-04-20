@@ -11,6 +11,7 @@ import useForm from '../hooks/FormHooks';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {safeParseJson} from '../utils/functions';
 import {mediaUrl} from '../utils/variables';
+import BackButton from '../components/BackButton';
 
 const Modify = () => {
   const location = useLocation();
@@ -25,7 +26,7 @@ const Modify = () => {
     },
   };
 
-  console.log(file, description, filters);
+  console.log(file);
 
   const alkuarvot = {
     title: file.title,
@@ -42,7 +43,7 @@ const Modify = () => {
     description: ['minimum 5 characters'],
   };
 
-  const {postMedia, loading} = useMedia();
+  const {putMedia, loading} = useMedia();
   const navigate = useNavigate();
 
   const doModify = async () => {
@@ -53,9 +54,15 @@ const Modify = () => {
         description: inputs.description,
         filters: filterInputs,
       };
+      // tee sopiva objekti lähetettäväksi
+      const data = {
+        title: inputs.title,
+        description: JSON.stringify(desc),
+      };
+
       const token = localStorage.getItem('token');
-      const mediaData = await postMedia(desc, token);
-      confirm(mediaData.message) && navigate('/home');
+      const mediaData = await putMedia(file.file_id, data, token);
+      confirm(mediaData.message) && navigate(-1);
     } catch (err) {
       alert(err.message);
     }
@@ -77,6 +84,7 @@ const Modify = () => {
     <>
       <Grid container>
         <Grid item xs={12}>
+          <BackButton />
           <Typography component="h1" variant="h2" gutterBottom>
             Modify
           </Typography>
@@ -118,7 +126,7 @@ const Modify = () => {
           </ValidatorForm>
         </Grid>
       </Grid>
-      {inputs.file && (
+      {file && (
         <Grid container>
           <Grid item xs={12}>
             <img
