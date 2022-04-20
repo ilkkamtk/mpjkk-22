@@ -2,7 +2,7 @@ import {Button, ImageListItem, ImageListItemBar} from '@mui/material';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
 
 const MediaRow = ({file, userId, deleteMedia}) => {
@@ -25,12 +25,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
   };
 
   return (
-    <ImageListItem
-      key={file.file_id}
-      // component={Link}
-      // to={'/single'}
-      state={{file}}
-    >
+    <ImageListItem key={file.file_id}>
       <img
         src={file.thumbnails ? mediaUrl + file.thumbnails.w320 : 'logo512.png'}
         alt={file.title}
@@ -39,9 +34,24 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       <ImageListItemBar
         actionIcon={
           <>
+            <Button
+              variant="contained"
+              component={Link}
+              to={'/single'}
+              state={{file}}
+            >
+              View
+            </Button>
             {userId === file.user_id && (
               <>
-                <Button variant="contained">Edit</Button>
+                <Button
+                  variant="contained"
+                  component={Link}
+                  to={'/modify'}
+                  state={{file}}
+                >
+                  Edit
+                </Button>
                 <Button variant="contained" onClick={doDelete}>
                   Delete
                 </Button>
