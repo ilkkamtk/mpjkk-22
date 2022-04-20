@@ -1,6 +1,5 @@
 // TODO: add necessary imports
-import {useContext, useEffect, useState} from 'react';
-import {MediaContext} from '../contexts/MediaContext';
+import {useEffect, useState} from 'react';
 import {appID, baseUrl} from '../utils/variables';
 
 const fetchJson = async (url, options = {}) => {
@@ -19,7 +18,7 @@ const fetchJson = async (url, options = {}) => {
 };
 
 const useMedia = (showAllFiles, userId) => {
-  const {update} = useContext(MediaContext);
+  const [update, setUpdate] = useState(false);
   const [mediaArray, setMediaArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const getMedia = async () => {
@@ -67,13 +66,17 @@ const useMedia = (showAllFiles, userId) => {
   };
 
   const deleteMedia = async (fileId, token) => {
-    const fetchOptions = {
-      method: 'DELETE',
-      headers: {
-        'x-access-token': token,
-      },
-    };
-    return await fetchJson(baseUrl + 'media/' + fileId, fetchOptions);
+    try {
+      const fetchOptions = {
+        method: 'DELETE',
+        headers: {
+          'x-access-token': token,
+        },
+      };
+      return await fetchJson(baseUrl + 'media/' + fileId, fetchOptions);
+    } finally {
+      setUpdate(!update);
+    }
   };
 
   const putMedia = async (fileId, data, token) => {
